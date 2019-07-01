@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "626586466751",
+    "firebase_url": "https://istio-mesh-214206.firebaseio.com",
+    "project_id": "istio-mesh-214206",
+    "storage_bucket": "istio-mesh-214206.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626586466751:android:5a7ea192586115b2",
+        "android_client_info": {
+          "package_name": "com.vinayak.geotesting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626586466751-v0km2rf2f9dla8uop1n79pdjsdi98etf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIYFJoIjqNDoQmkQMgO6DbaZbtshQuOpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626586466751-v0km2rf2f9dla8uop1n79pdjsdi98etf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
