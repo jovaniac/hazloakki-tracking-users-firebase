@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -44,6 +45,7 @@ public class GeoService extends Service implements GoogleApiClient.ConnectionCal
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private DatabaseReference ref;
+    //CollectionReference ref;
     private GeoFire geoFire;
     private LocationChangeListener mLocationChangeListener;
     private static final String TAG = GeoService.class.getSimpleName();
@@ -78,6 +80,7 @@ public class GeoService extends Service implements GoogleApiClient.ConnectionCal
         Toast.makeText(this, "Creating service.", Toast.LENGTH_SHORT).show();
 
         ref = FirebaseDatabase.getInstance().getReference("users-tracking");
+        //ref = FirebaseFirestore.getInstance().collection("users-tracking");
         geoFire = new GeoFire(ref);
         isServiceRunning = false;
     }
@@ -123,6 +126,7 @@ public class GeoService extends Service implements GoogleApiClient.ConnectionCal
             geoQuery.removeAllListeners();
         }
         geoQuery = geoFire.queryAtLocation(new GeoLocation(latLng.latitude, latLng.longitude), 2f);
+
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
@@ -149,6 +153,38 @@ public class GeoService extends Service implements GoogleApiClient.ConnectionCal
                 Log.d("ERROR", "" + error);
             }
         });
+
+       /* geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                sendNotification("MRF", String.format("%s entered the dangerous area", key));
+                System.out.println(String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                sendNotification("MRF", String.format("%s exit the dangerous area", key));
+                System.out.println(String.format("Key %s is no longer in the search area", key));
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+                Log.d("MOVE", String.format("%s move within the dangerous area [%f/%f]", key, location.latitude, location.longitude));
+                System.out.println(String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                System.out.println("All initial data has been loaded and events have been fired!");
+            }
+
+            @Override
+            public void onGeoQueryError(Exception exception) {
+                Log.d("ERROR", "" + exception.toString());
+                System.err.println("There was an error with this query: " + exception.toString());
+            }
+        });
+        */
     }
 
     /**
@@ -296,6 +332,8 @@ public class GeoService extends Service implements GoogleApiClient.ConnectionCal
                     }
                 }
             });
+
+
 
             Log.d("MRF", String.format("Your last location was chaged: %f / %f", latitude, longitude));
         } else {

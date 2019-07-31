@@ -50,8 +50,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBar;
 import com.mahmud.geotesting.R;
+
 
 import java.util.Random;
 
@@ -76,6 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GeoService geoService;
     private boolean serviceBound;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
        // loginToFirebase();
+
 
     }
 
@@ -262,6 +266,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         private static final String TAG = GeoService.class.getSimpleName();
 
 
+
         // Is the service tracking time?
         private boolean isServiceRunning;
 
@@ -304,7 +309,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             });
 
             ref = FirebaseDatabase.getInstance().getReference("users-tracking");
+            //ref2 = FirebaseFirestore.getInstance().collection("users-tracking");
+
             geoFire = new GeoFire(ref);
+            //geoFire2= new com.koalap.geofirestore.GeoFire(ref2);
             isServiceRunning = false;
 
         }
@@ -353,6 +361,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 geoQuery.removeAllListeners();
             }
             geoQuery = geoFire.queryAtLocation(new GeoLocation(latLng.latitude, latLng.longitude), 2f);
+
             geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
                 @Override
                 public void onKeyEntered(String key, GeoLocation location) {
@@ -520,7 +529,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 Toast.makeText(getApplicationContext(), "ubicacion trackin :) Latitude "+latitude + " Longitud: "+longitude, Toast.LENGTH_SHORT).show();
 
-                geoFire.setLocation("Isra", new GeoLocation(latitude, longitude), new GeoFire.CompletionListener() {
+              geoFire.setLocation("Isra", new GeoLocation(latitude, longitude), new GeoFire.CompletionListener() {
 
                     @Override
                     public void onComplete(String key, DatabaseError error) {
@@ -529,6 +538,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                 });
+
 
                 //Log.d("MRF", String.format("Your last location was chaged: %f / %f", latitude, longitude));
                 //Toast.makeText(getApplicationContext(), "Your last location was chaged:", Toast.LENGTH_SHORT).show();
